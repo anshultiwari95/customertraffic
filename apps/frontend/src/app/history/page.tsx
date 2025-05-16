@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 type HistoryItem = {
   store_id: number;
-  hour: number;
+  hour: number; // you can keep this if you want to keep the data but not show it
   customers_in: number;
   customers_out: number;
 };
@@ -74,7 +74,7 @@ export default function History() {
             <table className="min-w-full divide-y divide-indigo-700 table-auto">
               <thead className="bg-gray-100">
                 <tr>
-                  {['Store ID', 'Hour', 'Customers In', 'Customers Out'].map((header) => (
+                  {['Store ID', 'Customers In', 'Customers Out'].map((header) => (
                     <th
                       key={header}
                       className="px-6 py-3 text-left text-xs font-semibold text-indigo-700 uppercase tracking-wider select-none"
@@ -87,18 +87,17 @@ export default function History() {
               <tbody className="divide-y divide-indigo-300">
                 {history.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="text-center py-8 text-indigo-500 italic select-none">
+                    <td colSpan={3} className="text-center py-8 text-indigo-500 italic select-none">
                       No historical data available
                     </td>
                   </tr>
                 ) : (
-                  history.map(({ store_id, hour, customers_in, customers_out }, i) => (
+                  history.map(({ store_id, customers_in, customers_out }, i) => (
                     <tr
                       key={i}
                       className="hover:bg-indigo-100 transition-colors cursor-default select-text"
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-indigo-900 font-medium">{store_id}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{hour}:00</td>
                       <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{customers_in}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{customers_out}</td>
                     </tr>
