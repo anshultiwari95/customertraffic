@@ -1,0 +1,22 @@
+{
+  "name": "customer-traffic-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo for real-time and historical customer traffic dashboard",
+  "workspaces": [
+    "apps/*",
+    "kafka/simulator"
+  ],
+  "scripts": {
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
