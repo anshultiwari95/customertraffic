@@ -28,48 +28,87 @@ export default function History() {
   }, []);
 
   return (
-    <main className="min-h-screen p-6 bg-white max-w-4xl mx-auto">
-      <div className="flex justify-between mb-6">
-        <button
-          onClick={() => router.push('/')}
-          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-        >
-          Home
-        </button>
-        <button
-          onClick={() => router.push('/live')}
-          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-blue-700 transition"
-        >
-          Live
-        </button>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-8">
+      <main className="w-full max-w-5xl bg-gray-900 rounded-2xl shadow-2xl p-10 border border-gray-700">
+        <div className="flex justify-between mb-8">
+          <button
+            onClick={() => router.push('/')}
+            className="
+              px-6 py-3 bg-gray-800 text-indigo-400 rounded-lg font-semibold
+              shadow-lg border border-indigo-600
+              hover:shadow-xl hover:bg-indigo-900
+              transition duration-300 ease-in-out
+              transform hover:-translate-y-1 hover:scale-105 active:scale-95
+              focus:outline-none focus:ring-4 focus:ring-indigo-600
+              select-none
+            "
+            aria-label="Go to Home"
+          >
+            Home
+          </button>
+          <button
+            onClick={() => router.push('/live')}
+            className="
+              px-6 py-3 bg-gray-800 text-indigo-400 rounded-lg font-semibold
+              shadow-lg border border-indigo-600
+              hover:shadow-xl hover:bg-indigo-900
+              transition duration-300 ease-in-out
+              transform hover:-translate-y-1 hover:scale-105 active:scale-95
+              focus:outline-none focus:ring-4 focus:ring-indigo-600
+              select-none
+            "
+            aria-label="Go to Live"
+          >
+            Live
+          </button>
+        </div>
 
-      <h1 className="text-2xl font-semibold mb-4">Historical Customer Traffic (Last 24h)</h1>
+        <h1 className="text-4xl font-extrabold mb-8 text-center text-indigo-300 drop-shadow-lg select-none">
+          Historical Customer Traffic (Last 24h)
+        </h1>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <table className="w-full border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-4 py-2">Store ID</th>
-              <th className="border px-4 py-2">Hour</th>
-              <th className="border px-4 py-2">Customers In</th>
-              <th className="border px-4 py-2">Customers Out</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.map((item, i) => (
-              <tr key={i} className="text-center">
-                <td className="border px-4 py-2">{item.store_id}</td>
-                <td className="border px-4 py-2">{item.hour}:00</td>
-                <td className="border px-4 py-2">{item.customers_in}</td>
-                <td className="border px-4 py-2">{item.customers_out}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </main>
+        {loading ? (
+          <p className="text-center text-indigo-400 select-none">Loading...</p>
+        ) : (
+          <div className="overflow-x-auto rounded-lg border border-indigo-700 shadow-lg bg-white">
+            <table className="min-w-full divide-y divide-indigo-700 table-auto">
+              <thead className="bg-gray-100">
+                <tr>
+                  {['Store ID', 'Hour', 'Customers In', 'Customers Out'].map((header) => (
+                    <th
+                      key={header}
+                      className="px-6 py-3 text-left text-xs font-semibold text-indigo-700 uppercase tracking-wider select-none"
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-indigo-300">
+                {history.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="text-center py-8 text-indigo-500 italic select-none">
+                      No historical data available
+                    </td>
+                  </tr>
+                ) : (
+                  history.map(({ store_id, hour, customers_in, customers_out }, i) => (
+                    <tr
+                      key={i}
+                      className="hover:bg-indigo-100 transition-colors cursor-default select-text"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap text-indigo-900 font-medium">{store_id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{hour}:00</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{customers_in}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-indigo-900">{customers_out}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
